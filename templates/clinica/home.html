@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clínica Salud y Vida</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="bg-primary text-white text-center py-4">
+        <div class="container">
+            <img src="{% static 'img/logo.png' %}" alt="Logo Clínica" class="mb-3" style="width: 100px;">
+            <h1>Clínica Salud y Vida</h1>
+        </div>
+    </header>
+
+    <main class="container my-5">
+        <div class="row">
+            {% for especialidad in especialidades %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        {% if especialidad.imagen %}
+                            <img src="{{ especialidad.imagen.url }}" class="card-img-top" alt="{{ especialidad.nombre }}">
+                        {% else %}
+                            <img src="{% static 'especialidades/default.jpg' %}" class="card-img-top" alt="Imagen por defecto">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ especialidad.nombre }}</h5>
+                            <p class="card-text">{{ especialidad.descripcion }}</p>
+                            
+                            <h6>Especialistas:</h6>
+                            <ul>
+                                {% for medico in especialidad.medicos.all %}
+                                    <li>{{ medico.nombre }} - ${{ medico.valor_consulta }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'crear_reserva' %}" 
+                               class="btn {% if especialidad.medicos.count > 0 %}btn-primary{% else %}btn-danger{% endif %}">
+                               {% if especialidad.medicos.count > 0 %}Reservar{% else %}No Disponible{% endif %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer class="bg-light text-center py-4">
+        <p>Contacto: Clínica Salud y Vida - Dirección: Av. Principal 123, Ciudad</p>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
