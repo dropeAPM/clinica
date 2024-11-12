@@ -123,7 +123,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Carpeta de archivos estáticos (CSS, JS, etc.)
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Carpeta de archivos estáticos 
 
 # Media files (Uploaded images, files)
 MEDIA_URL = '/media/'

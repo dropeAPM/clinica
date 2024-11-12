@@ -47,11 +47,18 @@
 
     <script>
         $(document).ready(function() {
-            // Inicializar el datepicker
+            // Fechas bloqueadas (pasadas desde la vista)
+            const fechasBloqueadas = {{ fechas_bloqueadas|safe }};
+
+            // Inicializar el datepicker y bloquear fechas
             $('#id_fecha').datepicker({
                 format: 'yyyy-mm-dd',
                 startDate: new Date(),
                 daysOfWeekDisabled: [0, 6],
+                beforeShowDay: function(date) {
+                    const dateString = date.toISOString().split('T')[0];
+                    return fechasBloqueadas.indexOf(dateString) === -1;
+                }
             });
 
             // Inicializar el timepicker
@@ -67,17 +74,20 @@
                 scrollbar: true
             });
 
-            // Obtener el valor de la consulta del médico seleccionado usando AJAX
+            // Mostrar el valor de la consulta del médico seleccionado
             $('#id_medico').change(function() {
                 const medicoId = $(this).val();
                 if (medicoId) {
                     $.ajax({
-                        url: '/get_medico_valor/', // URL de una vista que devolverá el valor del médico
+                        url: '/get_medico_valor/',
                         data: {
                             'medico_id': medicoId
                         },
                         success: function(data) {
-                            $('#valor_consulta').text(`$${data.valor_consulta}`);
+                            $('#valor_consulta').text(`$${data.valor_consulta.toFixed(2)}`);
+                        },
+                        error: function() {
+                            $('#valor_consulta').text('Error al obtener el valor de la consulta');
                         }
                     });
                 } else {
