@@ -18,7 +18,7 @@ class ReservaForm(forms.ModelForm):
 
     class Meta:
         model = Reserva
-        fields = ['paciente', 'medico', 'fecha', 'hora', 'codigo_descuento']
+        fields = ['paciente', 'medico', 'fecha', 'hora', 'email', 'telefono', 'codigo_descuento']
 
         widgets = {
             'fecha': forms.DateInput(attrs={
@@ -28,6 +28,7 @@ class ReservaForm(forms.ModelForm):
             }),
             'paciente': forms.TextInput(attrs={'class': 'form-control'}),
             'medico': forms.Select(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su correo'}),
+            'telefono': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su teléfono'}),
             'codigo_descuento': forms.TextInput(attrs={'class': 'form-control'}),
         }
-

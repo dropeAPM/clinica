@@ -35,6 +35,8 @@ class Reserva(models.Model):
     medico = models.ForeignKey(Medico, on_delete=models.CASCADE)
     fecha = models.DateField()
     hora = models.TimeField()
+    email = models.EmailField()  # Campo obligatorio
+    telefono = models.CharField(max_length=12)  # Campo obligatorio
     codigo_descuento = models.CharField(max_length=5, blank=True, null=True)
     monto_pagado = models.DecimalField(max_digits=7, decimal_places=2)
 
@@ -62,6 +64,3 @@ class Reserva(models.Model):
         """
         self.full_clean()  # Ejecuta clean() antes de guardar
         super().save(*args, **kwargs)
-
-
-
