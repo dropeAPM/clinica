@@ -3,6 +3,8 @@
 import os
 import sys
 
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sistema_medico.settings')
+
 
 def main():
     """Run administrative tasks."""
